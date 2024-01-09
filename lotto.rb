@@ -47,14 +47,7 @@ end
 
 class Predict
     def generate_7numbers
-        e = %w[]
-        e.append(rand(1..15))
-        e.append(rand(1..15))
-        e.append(rand(1..15))
-        e.append(rand(1..15))
-        e.append(rand(1..15))
-        e.append(rand(1..15))
-        e.append(rand(1..15))
+        e = Array.new(7) { rand(1..16) }
         e.sort
     end
 end
