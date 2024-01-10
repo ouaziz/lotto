@@ -2,19 +2,20 @@ require 'csv'
 
 # data = CSV.read("max2023.csv")
 data = CSV.parse(File.read("max2023.csv"), headers: true)
-rows = data.length-1
+rows = data.length
 cols = 7
 table = Array.new(rows) { Array.new(cols) }
 
-for i in 0..rows
+for i in 0...rows
     for j in 1..cols
-        table[i][j] = data[i][j]
+        table[i.to_i][j.to_i-1] = data[i][j]
     end
 end
 
-table.each do |row|
-    puts row.join(' ')
-end
+# table.each do |row|
+#     puts "\n\nlength() method form : #{row.length()}"
+#     puts "row = #{row}"
+# end
 
 class Init
     def get_minified(r)
@@ -64,15 +65,23 @@ class Predict
     end
 end
 
-r = %w[03 06 11 24 29 45 50]
-puts "original = #{r}"
-c = Init.new.get_minified(r)
-puts "minified = #{c}"
-d = Init.new.get_maxified(c)
-puts "maxified = #{d}"
+# r = %w[03 06 11 24 29 45 50]
+# puts "original = #{r}"
+# c = Init.new.get_minified(r)
+# puts "minified = #{c}"
+# d = Init.new.get_maxified(c)
+# puts "maxified = #{d}"
 
-e = Predict.new.generate_7numbers
-puts "generated = #{e}"
-d = Init.new.get_maxified(e)
-puts "maxified = #{d}"
+# e = Predict.new.generate_7numbers
+# puts "generated = #{e}"
+# d = Init.new.get_maxified(e)
+# puts "maxified = #{d}"
+
+puts "minify table"
+table.each do |row|
+    # puts "row = #{row}"
+    c = Init.new.get_minified(row)
+    puts "minified = #{c}"
+end
+
 exit
