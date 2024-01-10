@@ -1,6 +1,6 @@
-require 'csv'
+# require 'csv'
 
-data = CSV.read("data.csv")
+# data = CSV.read("data.csv")
 
 
 class Init
