@@ -18,43 +18,33 @@ end
 # end
 
 class Init
-    def get_minified(r)
-        c = %w[]
-        c.append(r[0].to_i)
-        r1 = r[1].to_i - r[0].to_i
-        c.append(r1)
-        r2 = r[2].to_i - r[1].to_i
-        c.append(r2)
-        r3 = r[3].to_i - r[2].to_i
-        c.append(r3)
-        r4 = r[4].to_i - r[3].to_i
-        c.append(r4)
-        r5 = r[5].to_i - r[4].to_i
-        c.append(r5)
-        r6 = r[6].to_i - r[5].to_i
-        c.append(r6)
-        # (1..6).each do |i|
-        #     a = r[i].to_i - r[i-1].to_i
-        #     c.append(a)
-        # end
+    def get_minified_array(r)
+        cols = 7
+        c = Array.new(cols) 
+        for i in 0...cols
+            if i == 0 then
+                c[i] = r[i].to_i
+            else
+                c[i] = r[i].to_i - r[i-1].to_i
+            end 
+        end
+        return c
     end
 
-    def get_maxified(data)
-        r = data
-        c = %w[]
-        c.append(r[0].to_i)
-        r1 = r[1].to_i + c[0].to_i
-        c.append(r1)
-        r2 = r[2].to_i + r1
-        c.append(r2)
-        r3 = r[3].to_i + r2
-        c.append(r3)
-        r4 = r[4].to_i + r3
-        c.append(r4)
-        r5 = r[5].to_i + r4
-        c.append(r5)
-        r6 = r[6].to_i + r5
-        c.append(r6)
+    def get_maximized_array(r)
+        cols = 7
+        c = Array.new(cols)
+        for i in 0...cols
+            if i == 0 then
+                c[i] = r[i].to_i
+                
+            elsif i == 1 then 
+                c[i] = r[i].to_i + r[i-1].to_i
+            else
+                c[i] = r[i].to_i + c[i-1].to_i
+            end 
+        end
+        return c
     end
 end
 
@@ -65,23 +55,23 @@ class Predict
     end
 end
 
-# r = %w[03 06 11 24 29 45 50]
-# puts "original = #{r}"
-# c = Init.new.get_minified(r)
-# puts "minified = #{c}"
-# d = Init.new.get_maxified(c)
-# puts "maxified = #{d}"
+r = %w[03 06 11 24 29 45 50]
+puts "original = #{r}"
+c = Init.new.get_minified_array(r)
+puts "minified = #{c}"
+d = Init.new.get_maximized_array(c)
+puts "maxified = #{d}"
 
 # e = Predict.new.generate_7numbers
 # puts "generated = #{e}"
-# d = Init.new.get_maxified(e)
+# d = Init.new.get_maximized_array(e)
 # puts "maxified = #{d}"
 
-puts "minify table"
-table.each do |row|
-    # puts "row = #{row}"
-    c = Init.new.get_minified(row)
-    puts "minified = #{c}"
-end
+# puts "minify table"
+# table.each do |row|
+#     # puts "row = #{row}"
+#     c = Init.new.get_minified_array(row)
+#     puts "minified = #{c}"
+# end
 
 exit
