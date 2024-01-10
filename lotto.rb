@@ -1,11 +1,23 @@
-# require 'csv'
+require 'csv'
 
-# data = CSV.read("data.csv")
+# data = CSV.read("max2023.csv")
+data = CSV.parse(File.read("max2023.csv"), headers: true)
+rows = data.length-1
+cols = 7
+table = Array.new(rows) { Array.new(cols) }
 
+for i in 0..rows
+    for j in 1..cols
+        table[i][j] = data[i][j]
+    end
+end
+
+table.each do |row|
+    puts row.join(' ')
+end
 
 class Init
-    def get_minified
-        r = %w[03 06 11 24 29 45 50]
+    def get_minified(r)
         c = %w[]
         c.append(r[0].to_i)
         r1 = r[1].to_i - r[0].to_i
@@ -52,12 +64,15 @@ class Predict
     end
 end
 
-c = Init.new.get_minified
-puts "c = #{c}"
+r = %w[03 06 11 24 29 45 50]
+puts "original = #{r}"
+c = Init.new.get_minified(r)
+puts "minified = #{c}"
 d = Init.new.get_maxified(c)
-puts "d = #{d}"
+puts "maxified = #{d}"
 
 e = Predict.new.generate_7numbers
-puts "e = #{e}"
+puts "generated = #{e}"
 d = Init.new.get_maxified(e)
-puts "d = #{d}"
+puts "maxified = #{d}"
+exit
