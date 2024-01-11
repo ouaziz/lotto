@@ -1,15 +1,31 @@
 require 'csv'
 
-# data = CSV.read("max2023.csv")
 data = CSV.parse(File.read("max2023.csv"), headers: true)
-rows = data.length
-cols = 7
-table = Array.new(rows) { Array.new(cols) }
 
-for i in 0...rows
-    for j in 1..cols
-        table[i.to_i][j.to_i-1] = data[i][j]
+def get_lotto_numbers(data)
+    rows = data.length
+    cols = 7
+    table = Array.new(rows) { Array.new(cols) }
+
+    for i in 0...rows
+        for j in 0...cols
+            table[i.to_i][j.to_i] = data[i.to_i][j.to_i+3]
+        end
     end
+    return table
+end
+
+def get_lotto_dates(data)
+    rows = data.length
+    cols = 3
+    table = Array.new(rows) { Array.new(cols) }
+
+    for i in 0...rows
+        for j in 0...cols
+            table[i.to_i][j.to_i] = data[i.to_i][j.to_i]
+        end
+    end
+    return table
 end
 
 # table.each do |row|
@@ -46,6 +62,15 @@ class Init
         end
         return c
     end
+
+    def minify_data(number)
+        characters = number.to_s.chars.map(&:to_i)
+        r = 0 
+        characters.each do |c|
+            r = r + c
+        end
+        return r
+    end
 end
 
 class Predict
@@ -55,23 +80,30 @@ class Predict
     end
 end
 
-r = %w[03 06 11 24 29 45 50]
-puts "original = #{r}"
-c = Init.new.get_minified_array(r)
-puts "minified = #{c}"
-d = Init.new.get_maximized_array(c)
-puts "maxified = #{d}"
+# r = %w[03 06 11 24 29 45 50]
+# puts "original = #{r}"
+# c = Init.new.get_minified_array(r)
+# puts "minified = #{c}"
+# d = Init.new.get_maximized_array(c)
+# puts "maxified = #{d}"
 
 # e = Predict.new.generate_7numbers
 # puts "generated = #{e}"
 # d = Init.new.get_maximized_array(e)
 # puts "maxified = #{d}"
 
-# puts "minify table"
-# table.each do |row|
-#     # puts "row = #{row}"
+# puts "minify lotto_numbers"
+# get_lotto_numbers(data).each do |row|
+#     puts "row = #{row}"
 #     c = Init.new.get_minified_array(row)
 #     puts "minified = #{c}"
 # end
+
+puts "minify lotto_dates"
+get_lotto_dates(data).each do |row|
+    puts "row = #{row}"
+    # c = Init.new.get_minified_array(row)
+    # puts "minified = #{c}"
+end
 
 exit
